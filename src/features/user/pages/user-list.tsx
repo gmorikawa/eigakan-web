@@ -1,15 +1,14 @@
 import { useUsers } from "@features/user/hooks/users";
 
 import Container from "@/components/container/container";
+import UserTable from "../components/user-table";
 
 export function UserListPage() {
     const users = useUsers();
 
     return (
         <Container>
-            {users.data.map((user) => (
-                <div key={user.id}>{user.fullname}</div>
-            ))}
+            <UserTable users={users.data} />
         </Container>
     );
 }
