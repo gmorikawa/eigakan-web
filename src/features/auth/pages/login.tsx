@@ -1,12 +1,16 @@
-import Button from "@/components/input/button";
-import Container from "@/components/container/container";
-import Form from "@/components/form/form";
-import Stack from "@/components/container/stack";
+import useNavigator from "@hooks/use-navigator";
+
+import { useAuthentication } from "@features/auth/hooks/authentication";
+
+import Button from "@components/input/button";
+import Container from "@components/container/container";
+import Form from "@components/form/form";
+import Stack from "@components/container/stack";
 
 import { Checkbox, FormControl, FormLabel, Input, Link } from "@mui/joy";
-import { useAuthentication } from "@/features/auth/hooks/use-authentication";
 
 export function LoginPage() {
+    const navigate = useNavigator();
     const { login } = useAuthentication();
 
     return (
@@ -20,9 +24,12 @@ export function LoginPage() {
                         password: formElements.password.value,
                         persistent: formElements.persistent.checked,
                     };
-                    alert(JSON.stringify(data, null, 2));
 
                     login(data.email, data.password)
+                        .then(() => {
+                            console.log("Login successful");
+                            navigate.to("/admin/user/list");
+                        })
                         .catch((error) => {
                             console.error("Login failed:", error);
                         });

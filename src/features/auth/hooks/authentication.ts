@@ -1,10 +1,11 @@
-import type { Authentication } from "@/features/auth/types/authentication";
-import { useSession, type SessionController } from "./use-session";
+import type { Authentication } from "@features/auth/types/authentication";
+import { useSession, type SessionController } from "@features/auth/hooks/session";
 
 export interface AuthenticationController {
     session: SessionController;
 
     login: (username: string, password: string) => Promise<Authentication>;
+    logout: () => void;
 }
 
 const loginRequest = (username: string, password: string) => {
@@ -28,11 +29,15 @@ export function useAuthentication(): AuthenticationController {
                 }
 
                 const authentication: Authentication = await response.json();
-                session.update(authentication.token, null);
+                session.update(authentication.token, authentication.loggedUser);
 
                 return authentication;
             });
     };
 
-    return { session, login };
+    const logout = () => {
+        session.reset();
+    };
+
+    return { session, login, logout };
 }

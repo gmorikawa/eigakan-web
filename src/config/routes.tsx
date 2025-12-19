@@ -5,7 +5,7 @@ import { AdminLayout } from "@/layout/admin";
 
 import { LoginPage } from "@/features/auth/pages/login";
 
-import { UserListPage } from "@/features/user/pages/user-list-page";
+import { UserListPage } from "@/features/user/pages/user-list";
 
 const rootRoute = createRootRoute();
 
@@ -29,7 +29,7 @@ const loginRoute = createRoute({
 
 const userListRoute = createRoute({
     getParentRoute: () => adminLayout,
-    path: "users",
+    path: "user/list",
     component: UserListPage
 });
 
