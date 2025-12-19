@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import type { Session } from "@features/auth/types/session";
 import type { Token } from "@features/auth/types/token";
@@ -10,15 +10,18 @@ export interface UserSessionProviderProps {
 }
 
 export function UserSessionProvider({ children }: UserSessionProviderProps) {
-    const [session, setSession] = useState<Session>({ token: "", loggedUser: null });
+    const [session, setSession] = useState<Session>({
+        token: window.localStorage.getItem("token") || "",
+        loggedUser: JSON.parse(window.localStorage.getItem("logged_user") || "null") as LoggedUser
+    });
 
-    const loadFromLocalStorage = () => {
-        const token = window.localStorage.getItem("token") || "";
-        const loggedUserString = window.localStorage.getItem("logged_user") || "";
-        const loggedUser = loggedUserString ? JSON.parse(loggedUserString) : null;
+    // const loadFromLocalStorage = () => {
+    //     const token = window.localStorage.getItem("token") || "";
+    //     const loggedUserString = window.localStorage.getItem("logged_user") || "";
+    //     const loggedUser = loggedUserString ? JSON.parse(loggedUserString) : null;
 
-        setSession({ token, loggedUser });
-    };
+    //     setSession({ token, loggedUser });
+    // };
 
     const update = (token: Token, loggedUser: LoggedUser) => {
         window.localStorage.setItem("token", token ?? "");
@@ -32,9 +35,6 @@ export function UserSessionProvider({ children }: UserSessionProviderProps) {
         setSession({ token: "", loggedUser: null });
     };
 
-    useEffect(() => {
-        loadFromLocalStorage();
-    }, []);
     return (
         <UserSessionContext.Provider value={{ ...session, update, reset }}>
             {children}
