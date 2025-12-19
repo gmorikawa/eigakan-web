@@ -59,7 +59,7 @@ export function Menu() {
     return (
         <MenuContainer>
             <MenuSection title="System">
-                <MenuItem icon={<UserIcon />} label="Users" link="/users" onClick={handleNavigate} />
+                <MenuItem icon={<UserIcon />} label="Users" link="/admin/user/list" onClick={handleNavigate} />
             </MenuSection>
         </MenuContainer>
     );

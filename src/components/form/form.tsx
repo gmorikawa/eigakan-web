@@ -5,6 +5,7 @@ export interface FormProps extends React.PropsWithChildren {
 
 export function Form({ fullHeight = false, onSubmit, children }: FormProps) {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         onSubmit?.(event);
     };
 

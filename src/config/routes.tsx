@@ -6,6 +6,7 @@ import { AdminLayout } from "@/layout/admin";
 import { LoginPage } from "@/features/auth/pages/login";
 
 import { UserListPage } from "@/features/user/pages/user-list";
+import { UserFormPage } from "@features/user/pages/user-form";
 
 const rootRoute = createRootRoute();
 
@@ -33,13 +34,20 @@ const userListRoute = createRoute({
     component: UserListPage
 });
 
+const userFormRoute = createRoute({
+    getParentRoute: () => adminLayout,
+    path: "user/form",
+    component: UserFormPage
+});
+
 const router = createRouter({
     routeTree: rootRoute.addChildren([
         authLayout.addChildren([
             loginRoute
         ]),
         adminLayout.addChildren([
-            userListRoute
+            userListRoute,
+            userFormRoute
         ]),
     ]),
 });

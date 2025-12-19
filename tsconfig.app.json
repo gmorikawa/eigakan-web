@@ -28,6 +28,7 @@
       "@features/*": ["./src/features/*"],
       "@components/*": ["./src/components/*"],
       "@hooks/*": ["./src/hooks/*"],
+      "@layout/*": ["./src/layout/*"],
       "@/*": ["./src/*"]
     }
   },

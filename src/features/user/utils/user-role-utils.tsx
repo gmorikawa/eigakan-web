@@ -3,7 +3,7 @@ import Chip from "@components/data/chip";
 export class UserRoleUtils {
     private static list = [
         { key: "ADMIN", label: "Administrator", chip: <Chip label="Admin" color="danger" /> },
-        { key: "CREATOR", label: "Creator", chip: <Chip label="Creator" color="primary" /> },
+        { key: "CREATOR", label: "Creator", chip: <Chip label="Creator" color="success" /> },
         { key: "VIEWER", label: "Viewer", chip: <Chip label="Viewer" color="primary" /> },
     ];
 
