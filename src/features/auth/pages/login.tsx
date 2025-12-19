@@ -1,4 +1,4 @@
-import useNavigator from "@hooks/use-navigator";
+import useNavigator from "@hooks/navigator";
 
 import { useAuthentication } from "@features/auth/hooks/authentication";
 

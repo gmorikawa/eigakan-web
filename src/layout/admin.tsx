@@ -1,4 +1,4 @@
-import { Outlet } from "@tanstack/react-router";
+import { Outlet } from "react-router";
 import { Divider } from "@mui/joy";
 
 import { Menu } from "@layout/menu";

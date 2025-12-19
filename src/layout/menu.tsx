@@ -1,6 +1,6 @@
 import { List, ListItem, ListItemButton, ListItemContent, ListItemDecorator, ListSubheader } from "@mui/joy";
-import { UserIcon } from "@/common/icons";
-import useNavigator from "@/hooks/use-navigator";
+import { UserIcon } from "@/shared/icons";
+import useNavigator from "@hooks/navigator";
 
 interface MenuSectionProps {
     title?: string;

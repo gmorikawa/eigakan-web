@@ -2,8 +2,8 @@ import Chip from "@components/data/chip";
 
 export class UserStatusUtils {
     private static list = [
-        { key: "ACTIVE", label: "Active", chip: <Chip label="Active" color="success" /> },
-        { key: "BLOCKED", label: "Blocked", chip: <Chip label="Blocked" color="danger" /> },
+        { key: "ACTIVE", label: "Active", chip: <Chip label="active" color="success" /> },
+        { key: "BLOCKED", label: "Blocked", chip: <Chip label="blocked" color="danger" /> },
     ];
 
     public static getList() {

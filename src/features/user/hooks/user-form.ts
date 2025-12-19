@@ -1,19 +1,9 @@
-import { useAlert } from "@components/feedback/alert";
-import { useSession } from "@features/auth/hooks/session";
-import type { Session } from "@features/auth/types/session";
-import type { NewUser, User } from "@features/user/types/entity";
 import { useState } from "react";
 
-const createUserRequest = async (session: Session, user: NewUser) => {
-    return fetch("http://localhost:3020/api/users", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": session.token ?? "",
-        },
-        body: JSON.stringify(user),
-    });
-};
+import type { NewUser, User } from "@features/user/types/entity";
+import { useUserController } from "@features/user/hooks/user-controller";
+
+import { useAlert } from "@components/feedback/alert";
 
 export interface UserFormConfiguration {
     defaultValues?: Partial<User>;
@@ -22,12 +12,12 @@ export interface UserFormConfiguration {
 }
 
 export function useUserForm(config?: UserFormConfiguration) {
-    const session = useSession();
+    const controller = useUserController();
     const alert = useAlert();
     const [user, setUser] = useState<Partial<User>>(config?.defaultValues || {});
     const handleChange = (field: string, value: any) => {
-        setUser((prevUser) => ({
-            ...prevUser,
+        setUser((previvousUser) => ({
+            ...previvousUser,
             [field]: value,
         }));
     };
@@ -40,14 +30,12 @@ export function useUserForm(config?: UserFormConfiguration) {
     };
 
     const handleSubmit = () => {
-        createUserRequest(session, user as NewUser)
-            .then(async (response) => {
-                if (!response.ok) {
-                    throw new Error("Failed to create user");
-                }
-
-                const createdUser: User = await response.json();
-                config?.onSuccess?.(createdUser);
+        ((user.id)
+            ? controller.update(user.id, user as User)
+            : controller.create(user as NewUser)
+        )
+            .then(async (savedUser: User) => {
+                config?.onSuccess?.(savedUser);
             })
             .catch((error) => {
                 config?.onError?.(error);
@@ -55,8 +43,13 @@ export function useUserForm(config?: UserFormConfiguration) {
             });
     };
 
+    const updateEntity = (entity: Partial<User>) => {
+        setUser(entity);
+    };
+
     return {
         user,
+        updateEntity,
         handleChange,
         handleBlur,
         handleSubmit

@@ -2,9 +2,9 @@ import Chip from "@components/data/chip";
 
 export class UserRoleUtils {
     private static list = [
-        { key: "ADMIN", label: "Administrator", chip: <Chip label="Admin" color="danger" /> },
-        { key: "CREATOR", label: "Creator", chip: <Chip label="Creator" color="success" /> },
-        { key: "VIEWER", label: "Viewer", chip: <Chip label="Viewer" color="primary" /> },
+        { key: "ADMIN", label: "Administrator", chip: <Chip label="admin" color="danger" /> },
+        { key: "CREATOR", label: "Creator", chip: <Chip label="creator" color="success" /> },
+        { key: "VIEWER", label: "Viewer", chip: <Chip label="viewer" color="primary" /> },
     ];
 
     public static getList() {

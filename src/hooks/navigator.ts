@@ -1,4 +1,4 @@
-import { useNavigate } from "@tanstack/react-router";
+import { useNavigate } from "react-router";
 
 export interface Navigation {
     to: (path: string) => void;
@@ -7,12 +7,12 @@ export interface Navigation {
 export function useNavigator(): Navigation {
     const navigate = useNavigate();
 
-    function to(path: string) {
-        navigate({ to: path });
+    const to = (path: string) => {
+        navigate(path);
     }
 
     return {
-        to,
+        to
     };
 }
 

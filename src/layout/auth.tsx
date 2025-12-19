@@ -1,5 +1,5 @@
 import { Container } from "@/components/container/container";
-import { Outlet } from "@tanstack/react-router";
+import { Outlet } from "react-router";
 
 export function AuthLayout() {
     return (

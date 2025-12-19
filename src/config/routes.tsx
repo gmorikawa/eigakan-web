@@ -1,4 +1,4 @@
-import { createRootRoute, createRoute, createRouter, RouterProvider } from "@tanstack/react-router";
+import { BrowserRouter, Routes, Route } from "react-router";
 
 import { AuthLayout } from "@/layout/auth";
 import { AdminLayout } from "@/layout/admin";
@@ -6,56 +6,29 @@ import { AdminLayout } from "@/layout/admin";
 import { LoginPage } from "@/features/auth/pages/login";
 
 import { UserListPage } from "@/features/user/pages/user-list";
-import { UserFormPage } from "@features/user/pages/user-form";
+import { UserCreateFormPage } from "@features/user/pages/user-create-form";
+import { UserUpdateFormPage } from "@features/user/pages/user-update-form";
 
-const rootRoute = createRootRoute();
-
-const authLayout = createRoute({
-    getParentRoute: () => rootRoute,
-    path: "auth",
-    component: AuthLayout,
-});
-
-const adminLayout = createRoute({
-    getParentRoute: () => rootRoute,
-    path: "admin",
-    component: AdminLayout,
-});
-
-const loginRoute = createRoute({
-    getParentRoute: () => authLayout,
-    path: "login",
-    component: LoginPage
-});
-
-const userListRoute = createRoute({
-    getParentRoute: () => adminLayout,
-    path: "user/list",
-    component: UserListPage
-});
-
-const userFormRoute = createRoute({
-    getParentRoute: () => adminLayout,
-    path: "user/form",
-    component: UserFormPage
-});
-
-const router = createRouter({
-    routeTree: rootRoute.addChildren([
-        authLayout.addChildren([
-            loginRoute
-        ]),
-        adminLayout.addChildren([
-            userListRoute,
-            userFormRoute
-        ]),
-    ]),
-});
-
-export function RoutesProvider() {
+export function RouteProvider() {
     return (
-        <RouterProvider router={router} />
+        <BrowserRouter>
+            <Routes>
+                <Route path="auth" element={<AuthLayout />}>
+                    <Route path="login" element={<LoginPage />} />
+                </Route>
+
+                <Route path="admin" element={<AdminLayout />}>
+                    <Route path="user">
+                        <Route path="list" element={<UserListPage />} />
+                        <Route path="form">
+                            <Route index element={<UserCreateFormPage />} />
+                            <Route path=":id" element={<UserUpdateFormPage />} />
+                        </Route>
+                    </Route>
+                </Route>
+            </Routes>
+        </BrowserRouter>
     );
 }
 
-export default RoutesProvider;
+export default RouteProvider;
