@@ -20,12 +20,12 @@ export function LoginPage() {
                     event.preventDefault();
                     const formElements = event.currentTarget.elements;
                     const data = {
-                        email: formElements.email.value,
+                        username: formElements.username.value,
                         password: formElements.password.value,
                         persistent: formElements.persistent.checked,
                     };
 
-                    login(data.email, data.password)
+                    login(data.username, data.password)
                         .then(() => {
                             console.log("Login successful");
                             navigate.to("/admin/user/list");
@@ -37,8 +37,8 @@ export function LoginPage() {
             >
                 <Stack spacing={2}>
                     <FormControl required>
-                        <FormLabel>Email</FormLabel>
-                        <Input type="text" name="email" />
+                        <FormLabel>Username</FormLabel>
+                        <Input type="text" name="username" />
                     </FormControl>
 
                     <FormControl required>
