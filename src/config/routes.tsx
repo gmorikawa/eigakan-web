@@ -1,29 +1,46 @@
 import { createRootRoute, createRoute, createRouter, RouterProvider } from "@tanstack/react-router";
-import AdminLayout from "@/layout/admin";
-import LoginPage from "@/features/auth/pages/login-page";
 
-import UserListPage from "@/features/user/pages/user-list-page";
+import { AuthLayout } from "@/layout/auth";
+import { AdminLayout } from "@/layout/admin";
 
-const rootRoute = createRootRoute({
+import { LoginPage } from "@/features/auth/pages/login";
+
+import { UserListPage } from "@/features/user/pages/user-list-page";
+
+const rootRoute = createRootRoute();
+
+const authLayout = createRoute({
+    getParentRoute: () => rootRoute,
+    path: "auth",
+    component: AuthLayout,
+});
+
+const adminLayout = createRoute({
+    getParentRoute: () => rootRoute,
+    path: "admin",
     component: AdminLayout,
 });
 
 const loginRoute = createRoute({
-    getParentRoute: () => rootRoute,
-    path: "/login",
+    getParentRoute: () => authLayout,
+    path: "login",
     component: LoginPage
 });
 
 const userListRoute = createRoute({
-    getParentRoute: () => rootRoute,
-    path: "/users",
+    getParentRoute: () => adminLayout,
+    path: "users",
     component: UserListPage
 });
 
 const router = createRouter({
     routeTree: rootRoute.addChildren([
-        loginRoute,
-        userListRoute
+        authLayout.addChildren([
+            loginRoute
+        ]),
+        adminLayout.addChildren([
+            userListRoute
+        ]),
     ]),
 });
 
