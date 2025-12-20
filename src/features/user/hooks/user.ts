@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import type { User } from "@features/user/types/entity";
 import type { Session } from "@features/auth/types/session";
 import { useSession } from "@features/auth/hooks/session";
+import Environment from "@config/environment";
 
 const getUserByIdRequest = async (session: Session, id: string) => {
-    return fetch(`http://localhost:3020/api/users/${id}`, {
+    return fetch(Environment.API_URL.concat(`/users/${id}`), {
         method: "GET",
         headers: {
             "Content-Type": "application/json",

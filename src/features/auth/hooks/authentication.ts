@@ -1,5 +1,6 @@
 import type { Authentication } from "@features/auth/types/authentication";
 import { useSession, type SessionController } from "@features/auth/hooks/session";
+import Environment from "@config/environment";
 
 export interface AuthenticationController {
     session: SessionController;
@@ -9,7 +10,7 @@ export interface AuthenticationController {
 }
 
 const loginRequest = (username: string, password: string) => {
-    return fetch("http://localhost:3020/api/auth/login", {
+    return fetch(Environment.API_URL.concat("/auth/login"), {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

@@ -1,11 +1,12 @@
 import type { ID } from "@/shared/types/id";
+import Environment from "@config/environment";
 
 import { useSession } from "@features/auth/hooks/session";
 import type { Session } from "@features/auth/types/session";
 import type { NewUser, User } from "@features/user/types/entity";
 
 const getAllRequest = async (session: Session) => {
-    const response = await fetch("http://localhost:3020/api/users", {
+    const response = await fetch(Environment.API_URL.concat("/users"), {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -21,7 +22,7 @@ const getAllRequest = async (session: Session) => {
 };
 
 const getByIdRequest = async (session: Session, id: ID) => {
-    const response = await fetch(`http://localhost:3020/api/users/${id}`, {
+    const response = await fetch(Environment.API_URL.concat(`/users/${id}`), {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -37,7 +38,7 @@ const getByIdRequest = async (session: Session, id: ID) => {
 };
 
 const createRequest = async (session: Session, user: NewUser) => {
-    const response = await fetch("http://localhost:3020/api/users", {
+    const response = await fetch(Environment.API_URL.concat("/users"), {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -54,7 +55,7 @@ const createRequest = async (session: Session, user: NewUser) => {
 };
 
 const updateRequest = async (session: Session, id: ID, user: Partial<User>) => {
-    const response = await fetch(`http://localhost:3020/api/users/${id}`, {
+    const response = await fetch(Environment.API_URL.concat(`/users/${id}`), {
         method: "PUT",
         headers: {
             "Content-Type": "application/json",
@@ -71,7 +72,7 @@ const updateRequest = async (session: Session, id: ID, user: Partial<User>) => {
 };
 
 const removeRequest = async (session: Session, id: ID) => {
-    const response = await fetch(`http://localhost:3020/api/users/${id}`, {
+    const response = await fetch(Environment.API_URL.concat(`/users/${id}`), {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",
