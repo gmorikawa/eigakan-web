@@ -1,4 +1,5 @@
-import useParams from "@hooks/params";
+import { useTitle } from "@hooks/title";
+import { useParams } from "@hooks/params";
 
 import { UserRoleUtils } from "@features/user/utils/user-role";
 import { useUserFormController } from "@features/user/hooks/user-form-controller";
@@ -11,6 +12,7 @@ import TextField from "@components/form/text-field";
 import RadioField from "@components/form/radio-field";
 
 export function UserUpdateFormPage() {
+    useTitle("Update User");
     const { id } = useParams();
 
     const form = useUserFormController({

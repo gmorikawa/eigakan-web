@@ -1,3 +1,5 @@
+import { useTitle } from "@hooks/title";
+
 import { useUserListController } from "@features/user/hooks/user-list-controller";
 
 import Container from "@/components/container/container";
@@ -5,6 +7,7 @@ import UserTable from "@features/user/components/user-table";
 import Button from "@components/input/button";
 
 export function UserListPage() {
+    useTitle("User List");
     const users = useUserListController();
 
     return (

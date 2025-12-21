@@ -1,3 +1,5 @@
+import { useTitle } from "@hooks/title";
+
 import { UserRoleUtils } from "@features/user/utils/user-role";
 import { useUserFormController } from "@features/user/hooks/user-form-controller";
 
@@ -10,6 +12,8 @@ import { TextField } from "@components/form/text-field";
 import { RadioField } from "@components/form/radio-field";
 
 export function UserCreateFormPage() {
+    useTitle("Create User");
+
     const form = useUserFormController({
         defaultValues: {
             username: "",

@@ -1,3 +1,5 @@
+import { useTitle } from "@hooks/title";
+
 import { useLanguageListController } from "@features/language/hooks/language-list-controller";
 
 import LanguageTable from "@features/language/components/language-table";
@@ -5,6 +7,8 @@ import Container from "@/components/container/container";
 import Button from "@components/input/button";
 
 export function LanguageListPage() {
+    useTitle("Language List");
+
     const languages = useLanguageListController();
 
     return (

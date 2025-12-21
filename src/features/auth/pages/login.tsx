@@ -1,4 +1,5 @@
-import useNavigator from "@hooks/navigator";
+import { useTitle } from "@hooks/title";
+import { useNavigator } from "@hooks/navigator";
 
 import { useAuthentication } from "@features/auth/hooks/authentication";
 
@@ -10,6 +11,8 @@ import Stack from "@components/container/stack";
 import { Checkbox, FormControl, FormLabel, Input, Link } from "@mui/joy";
 
 export function LoginPage() {
+    useTitle("Login");
+
     const navigate = useNavigator();
     const { login } = useAuthentication();
 
