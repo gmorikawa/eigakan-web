@@ -1,5 +1,5 @@
-import { useNavigator } from "@hooks/navigator";
-import { useUserForm } from "@features/user/hooks/user-form";
+import { UserRoleUtils } from "@features/user/utils/user-role";
+import { useUserFormController } from "@features/user/hooks/user-form-controller";
 
 import { Button } from "@components/input/button";
 import { Container } from "@/components/container/container";
@@ -8,12 +8,9 @@ import { PasswordField } from "@components/form/password-field";
 import { Stack } from "@components/container/stack";
 import { TextField } from "@components/form/text-field";
 import { RadioField } from "@components/form/radio-field";
-import { UserRoleUtils } from "@features/user/utils/user-role";
 
 export function UserCreateFormPage() {
-    const navigate = useNavigator();
-
-    const form = useUserForm({
+    const form = useUserFormController({
         defaultValues: {
             username: "",
             fullname: "",
@@ -21,25 +18,18 @@ export function UserCreateFormPage() {
             email: "",
             role: "VIEWER",
             status: "ACTIVE",
-        },
-        onSuccess: () => {
-            handleBack();
         }
     });
-
-    const handleBack = () => {
-        navigate.to("/admin/user/list");
-    };
 
     return (
         <Container>
             <Form onSubmit={form.handleSubmit}>
                 <Stack spacing={2}>
-                    <RadioField label="Role" property="role" options={UserRoleUtils.getList().filter((item) => item.key !== "ADMIN").map((item) => ({ label: item.label, value: item.key }))} value={form.user.role} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
-                    <TextField label="Full Name" property="fullname" value={form.user.fullname} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
-                    <TextField label="Username" property="username" value={form.user.username} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
-                    <TextField label="Email" property="email" value={form.user.email} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
-                    <PasswordField label="Password" property="password" value={form.user.password} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
+                    <RadioField label="Role" property="role" options={UserRoleUtils.getList().filter((item) => item.key !== "ADMIN").map((item) => ({ label: item.label, value: item.key }))} value={form.entity.role} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
+                    <TextField label="Full Name" property="fullname" value={form.entity.fullname} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
+                    <TextField label="Username" property="username" value={form.entity.username} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
+                    <TextField label="Email" property="email" value={form.entity.email} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
+                    <PasswordField label="Password" property="password" value={form.entity.password} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
 
                     <Container>
                         <Stack spacing={2} direction="row">
@@ -47,7 +37,7 @@ export function UserCreateFormPage() {
                                 Create
                             </Button>
 
-                            <Button type="button" variant="outlined" onClick={handleBack}>
+                            <Button type="button" variant="outlined" onClick={form.handleBack}>
                                 Cancel
                             </Button>
                         </Stack>
