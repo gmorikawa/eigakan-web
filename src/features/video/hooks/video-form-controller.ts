@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import { useNavigator } from "@hooks/navigator";
+
 import type { NewVideo, Video } from "@features/video/types/entity";
 import { useVideoController } from "@features/video/hooks/video-controller";
 
@@ -10,18 +12,20 @@ export interface VideoFormController {
     handleChange: (field: string, value: any) => void;
     handleBlur: (field: string, value: any) => void;
     handleSubmit: () => void;
+    handleBack: () => void;
 }
 
 export interface VideoFormConfiguration {
     defaultValues?: Partial<Video>;
-    onSuccess?: (video: Video) => void;
-    onError?: (error: any) => void;
 }
 
 export function useVideoFormController(config?: VideoFormConfiguration): VideoFormController {
-    const controller = useVideoController();
+    const navigate = useNavigator();
     const alert = useAlert();
+    const controller = useVideoController();
+
     const [entity, setEntity] = useState<Partial<Video>>(config?.defaultValues || {});
+
     const handleChange = (field: string, value: any) => {
         setEntity((previousEntity) => ({
             ...previousEntity,
@@ -42,12 +46,16 @@ export function useVideoFormController(config?: VideoFormConfiguration): VideoFo
             : controller.create(entity as NewVideo)
         )
             .then(async (savedVideo: Video) => {
-                config?.onSuccess?.(savedVideo);
+                setEntity(savedVideo);
+                alert.showMessage(`Video ${entity.id ? "updated" : "created"} successfully`, "success");
             })
-            .catch((error) => {
-                config?.onError?.(error);
+            .catch((_: Error) => {
                 alert.showMessage("Error creating video", "error");
             });
+    };
+
+    const handleBack = () => {
+        navigate.to("/admin/video/list");
     };
 
     useEffect(() => {
@@ -56,7 +64,7 @@ export function useVideoFormController(config?: VideoFormConfiguration): VideoFo
                 .then((fetchedEntity) => {
                     setEntity(fetchedEntity);
                 })
-                .catch((error) => {
+                .catch((error: Error) => {
                     console.error("Error fetching video:", error);
                 });
         }
@@ -65,6 +73,7 @@ export function useVideoFormController(config?: VideoFormConfiguration): VideoFo
         entity,
         handleChange,
         handleBlur,
-        handleSubmit
+        handleSubmit,
+        handleBack
     };
 }

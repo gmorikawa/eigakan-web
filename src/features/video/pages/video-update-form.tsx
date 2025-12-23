@@ -1,5 +1,4 @@
 import { useTitle } from "@hooks/title";
-import { useNavigator } from "@hooks/navigator";
 import { useParams } from "@hooks/params";
 
 import { useLanguageListController } from "@features/language/hooks/language-list-controller";
@@ -15,7 +14,6 @@ import { ComboField } from "@components/form/combo-field";
 
 export function VideoUpdateFormPage() {
     useTitle("Update Video");
-    const navigate = useNavigator();
     const { id } = useParams();
 
     const languages = useLanguageListController();
@@ -28,17 +26,8 @@ export function VideoUpdateFormPage() {
             releasedAt: null,
             language: null,
             tags: []
-        },
-        onSuccess: () => {
-            handleBack();
         }
     });
-
-    const handleBack = () => {
-        navigate.to("/admin/video/list");
-    };
-
-    console.log(form.entity)
 
     return (
         <Container>
@@ -63,7 +52,7 @@ export function VideoUpdateFormPage() {
                                 Update
                             </Button>
 
-                            <Button type="button" variant="outlined" onClick={handleBack}>
+                            <Button type="button" variant="outlined" onClick={form.handleBack}>
                                 Cancel
                             </Button>
                         </Stack>

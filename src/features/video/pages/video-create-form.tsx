@@ -1,5 +1,4 @@
 import { useTitle } from "@hooks/title";
-import { useNavigator } from "@hooks/navigator";
 
 import { useLanguageListController } from "@features/language/hooks/language-list-controller";
 import { useVideoFormController } from "@features/video/hooks/video-form-controller";
@@ -14,7 +13,6 @@ import { ComboField } from "@components/form/combo-field";
 
 export function VideoCreateFormPage() {
     useTitle("Create Video");
-    const navigate = useNavigator();
 
     const languages = useLanguageListController();
 
@@ -26,14 +24,7 @@ export function VideoCreateFormPage() {
             language: null,
             tags: []
         },
-        onSuccess: () => {
-            handleBack();
-        }
     });
-
-    const handleBack = () => {
-        navigate.to("/admin/video/list");
-    };
 
     return (
         <Container>
@@ -58,7 +49,7 @@ export function VideoCreateFormPage() {
                                 Create
                             </Button>
 
-                            <Button type="button" variant="outlined" onClick={handleBack}>
+                            <Button type="button" variant="outlined" onClick={form.handleBack}>
                                 Cancel
                             </Button>
                         </Stack>
