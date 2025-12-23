@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 
 import { AuthLayout } from "@/layout/auth";
 import { AdminLayout } from "@/layout/admin";
@@ -17,6 +17,8 @@ export function RouteProvider() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path="/" element={<Navigate to="/auth/login" replace />} />
+
                 <Route path="auth" element={<AuthLayout />}>
                     <Route path="login" element={<LoginPage />} />
                 </Route>
