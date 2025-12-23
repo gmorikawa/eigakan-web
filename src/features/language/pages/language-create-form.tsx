@@ -1,4 +1,4 @@
-import { useTitle } from "@hooks/title";
+import { usePageMetadata } from "@layout/page";
 import { useNavigator } from "@hooks/navigator";
 import { useLanguageFormController } from "@features/language/hooks/language-form-controller";
 
@@ -9,7 +9,7 @@ import { Stack } from "@components/container/stack";
 import { TextField } from "@components/form/text-field";
 
 export function LanguageCreateFormPage() {
-    useTitle("Create Language");
+    usePageMetadata({ title: "Create Language" });
     const navigate = useNavigator();
 
     const form = useLanguageFormController({

@@ -1,4 +1,4 @@
-import { useTitle } from "@hooks/title";
+import { usePageMetadata } from "@layout/page";
 
 import { useVideoListController } from "@features/video/hooks/video-list-controller";
 
@@ -7,7 +7,7 @@ import VideoTable from "@features/video/components/video-table";
 import Button from "@components/input/button";
 
 export function VideoListPage() {
-    useTitle("Video List");
+    usePageMetadata({ title: "Video List" });
     const videos = useVideoListController();
 
     return (

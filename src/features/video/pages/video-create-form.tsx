@@ -1,4 +1,4 @@
-import { useTitle } from "@hooks/title";
+import { usePageMetadata } from "@layout/page";
 
 import { useLanguageListController } from "@features/language/hooks/language-list-controller";
 import { useVideoFormController } from "@features/video/hooks/video-form-controller";
@@ -12,7 +12,7 @@ import { DateField } from "@components/form/date-field";
 import { ComboField } from "@components/form/combo-field";
 
 export function VideoCreateFormPage() {
-    useTitle("Create Video");
+    usePageMetadata({ title: "Create Video" });
 
     const languages = useLanguageListController();
 

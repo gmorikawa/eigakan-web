@@ -1,4 +1,4 @@
-import { useTitle } from "@hooks/title";
+import { usePageMetadata } from "@layout/page";
 import { useParams } from "@hooks/params";
 
 import { useLanguageListController } from "@features/language/hooks/language-list-controller";
@@ -13,7 +13,7 @@ import { DateField } from "@components/form/date-field";
 import { ComboField } from "@components/form/combo-field";
 
 export function VideoUpdateFormPage() {
-    useTitle("Update Video");
+    usePageMetadata({ title: "Update Video" });
     const { id } = useParams();
 
     const languages = useLanguageListController();

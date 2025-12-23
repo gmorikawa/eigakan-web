@@ -1,4 +1,4 @@
-import { useTitle } from "@hooks/title";
+import { usePageMetadata } from "@layout/page";
 
 import { useUserListController } from "@features/user/hooks/user-list-controller";
 
@@ -7,7 +7,7 @@ import UserTable from "@features/user/components/user-table";
 import Button from "@components/input/button";
 
 export function UserListPage() {
-    useTitle("User List");
+    usePageMetadata({ title: "User List" });
     const users = useUserListController();
 
     return (

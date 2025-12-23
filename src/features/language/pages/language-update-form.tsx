@@ -1,4 +1,4 @@
-import { useTitle } from "@hooks/title";
+import { usePageMetadata } from "@layout/page";
 import { useNavigator } from "@hooks/navigator";
 import { useParams } from "@hooks/params";
 
@@ -11,7 +11,7 @@ import { Stack } from "@components/container/stack";
 import { TextField } from "@components/form/text-field";
 
 export function LanguageUpdateFormPage() {
-    useTitle("Update Language");
+    usePageMetadata({ title: "Update Language" });
     const navigate = useNavigator();
     const { id } = useParams();
 

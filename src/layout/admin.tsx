@@ -3,6 +3,8 @@ import { Divider } from "@mui/joy";
 
 import { Menu } from "@layout/menu";
 import { Container } from "@components/container/container";
+import { PageMetadata } from "./page";
+import { PageHeader } from "./header";
 
 export function AdminLayout() {
     return (
@@ -14,7 +16,11 @@ export function AdminLayout() {
             <Divider orientation="vertical" />
 
             <Container height="100%" flexGrow={1} padding={4}>
-                <Outlet />
+                <PageMetadata>
+                    <PageHeader />
+                    
+                    <Outlet />
+                </PageMetadata>
             </Container>
         </Container>
     );
