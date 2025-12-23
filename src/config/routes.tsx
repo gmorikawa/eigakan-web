@@ -13,6 +13,10 @@ import { LanguageListPage } from "@features/language/pages/language-list";
 import { LanguageCreateFormPage } from "@features/language/pages/language-create-form";
 import { LanguageUpdateFormPage } from "@features/language/pages/language-update-form";
 
+import { VideoListPage } from "@features/video/pages/video-list";
+import { VideoCreateFormPage } from "@features/video/pages/video-create-form";
+import { VideoUpdateFormPage } from "@features/video/pages/video-update-form";
+
 export function RouteProvider() {
     return (
         <BrowserRouter>
@@ -37,6 +41,14 @@ export function RouteProvider() {
                         <Route path="form">
                             <Route index element={<LanguageCreateFormPage />} />
                             <Route path=":id" element={<LanguageUpdateFormPage />} />
+                        </Route>
+                    </Route>
+
+                    <Route path="video">
+                        <Route path="list" element={<VideoListPage />} />
+                        <Route path="form">
+                            <Route index element={<VideoCreateFormPage />} />
+                            <Route path=":id" element={<VideoUpdateFormPage />} />
                         </Route>
                     </Route>
                 </Route>

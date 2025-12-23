@@ -1,4 +1,5 @@
-import type { ID } from "@/shared/types/id";
+import type { ID } from "@shared/types/id";
+
 import Environment from "@config/environment";
 
 import { useSession } from "@features/auth/hooks/session";
@@ -98,11 +99,11 @@ export interface UserController {
 export function useUserController(): UserController {
     const session = useSession();
 
-    const getAll = async (): Promise<User[]> => getAllRequest(session);
-    const getById = async (id: ID): Promise<User> => getByIdRequest(session, id);
-    const create = async (user: NewUser): Promise<User> => createRequest(session, user);
-    const update = async (id: ID, user: User): Promise<User> => updateRequest(session, id, user);
-    const remove = async (id: ID): Promise<boolean> => removeRequest(session, id);
+    const getAll = (): Promise<User[]> => getAllRequest(session);
+    const getById = (id: ID): Promise<User> => getByIdRequest(session, id);
+    const create = (user: NewUser): Promise<User> => createRequest(session, user);
+    const update = (id: ID, user: User): Promise<User> => updateRequest(session, id, user);
+    const remove = (id: ID): Promise<boolean> => removeRequest(session, id);
 
     return {
         getAll,
