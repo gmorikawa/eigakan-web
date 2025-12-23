@@ -1,0 +1,1 @@
+export type ThemePalette = "primary" | "secondary" | "neutral" | "danger" | "success" | "warning";

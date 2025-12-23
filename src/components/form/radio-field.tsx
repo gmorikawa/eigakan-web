@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { FormControl, FormLabel, Radio, RadioGroup } from "@mui/joy";
+import type { ThemePalette } from "@shared/types/theme";
 
 export type RadioOption = {
     label: string;
@@ -14,12 +15,13 @@ export interface RadioFieldProps {
     fullWidth?: boolean;
 
     options?: RadioOption[];
+    palette?: ThemePalette;
 
     onChange?: (property: string, value: string) => void;
     onBlur?: (property: string, value: string) => void;
 }
 
-export function RadioField({ label, property, value, required, fullWidth, options, onChange, onBlur }: RadioFieldProps) {
+export function RadioField({ label, property, value, required, fullWidth, options, palette = "primary", onChange, onBlur }: RadioFieldProps) {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onChange?.(property, event.target.value);
     };
@@ -30,12 +32,12 @@ export function RadioField({ label, property, value, required, fullWidth, option
 
     return useMemo(
         () => (
-            <FormControl required={required} style={{ width: fullWidth ? "100%" : "auto" }}>
-                <FormLabel htmlFor={property}>{label}</FormLabel>
+            <FormControl required={required} style={{ width: fullWidth ? "100%" : "auto" }} color={palette}>
+                <FormLabel htmlFor={property} color={palette}>{label}</FormLabel>
 
-                <RadioGroup value={value} name={property} onChange={handleChange} onBlur={handleBlur} orientation="horizontal">
+                <RadioGroup value={value} name={property} onChange={handleChange} onBlur={handleBlur} orientation="horizontal" color={palette}>
                     {options?.map((option) => (
-                        <Radio key={option.value} value={option.value} label={option.label} size="sm" />
+                        <Radio key={option.value} value={option.value} label={option.label} size="sm" color={palette} />
                     ))}
                 </RadioGroup>
             </FormControl>

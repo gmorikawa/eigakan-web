@@ -1,12 +1,14 @@
 import { Chip as JoyChip, type ChipProps as JoyChipProps } from "@mui/joy";
+import type { ThemePalette } from "@shared/types/theme";
 
-export interface ChipProps extends JoyChipProps  {
+export interface ChipProps extends JoyChipProps {
     label: string;
+    palette?: ThemePalette;
 }
 
-export function Chip({ label, ...props }: ChipProps) {
+export function Chip({ label, palette = "primary", ...props }: ChipProps) {
     return (
-        <JoyChip {...props}>
+        <JoyChip color={palette} {...props}>
             {label}
         </JoyChip>
     );

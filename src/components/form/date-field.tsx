@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { FormControl, FormLabel, Input } from "@mui/joy";
+import type { ThemePalette } from "@shared/types/theme";
 
 export interface DateFieldProps {
     label: string;
@@ -7,6 +8,8 @@ export interface DateFieldProps {
     value?: Date | null;
     required?: boolean;
     fullWidth?: boolean;
+
+    palette?: ThemePalette;
 
     onChange?: (property: string, value: Date | null) => void;
     onBlur?: (property: string, value: Date | null) => void;
@@ -16,7 +19,7 @@ export interface DateFieldProps {
  * This component prevents direct input from user to avoid invalid date format.
  * Users must use the date picker to select a date.
  */
-export function DateField({ label, property, value, required = false, fullWidth = false, onChange, onBlur }: DateFieldProps) {
+export function DateField({ label, property, value, required = false, fullWidth = false, palette = "primary", onChange, onBlur }: DateFieldProps) {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onChange?.(property, event.target.value ? new Date(event.target.value) : null);
     };
@@ -27,8 +30,8 @@ export function DateField({ label, property, value, required = false, fullWidth 
 
     return useMemo(
         () => (
-            <FormControl required={required} style={{ width: fullWidth ? "100%" : "auto" }}>
-                <FormLabel htmlFor={property}>{label}</FormLabel>
+            <FormControl required={required} style={{ width: fullWidth ? "100%" : "auto" }} color={palette}>
+                <FormLabel htmlFor={property} color={palette}>{label}</FormLabel>
 
                 <Input
                     id={property}
@@ -39,6 +42,7 @@ export function DateField({ label, property, value, required = false, fullWidth 
                     onBlur={handleBlur}
                     onKeyDown={(e) => e.preventDefault()}
                     onKeyUp={(e) => e.preventDefault()}
+                    color={palette}
                 />
             </FormControl>
         ),

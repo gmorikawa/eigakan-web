@@ -1,14 +1,14 @@
 import { Button as JoyButton } from "@mui/joy";
+import type { ThemePalette } from "@shared/types/theme";
 
 export type ButtonType = "button" | "submit" | "reset";
 export type ButtonVariant = "solid" | "outlined" | "soft" | "plain";
-export type ButtonPalette = "primary" | "neutral" | "danger" | "success" | "warning";
 
 export interface ButtonProps extends React.PropsWithChildren {
     type?: ButtonType;
     fullWidth?: boolean;
     variant?: ButtonVariant;
-    palette?: ButtonPalette;
+    palette?: ThemePalette;
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 

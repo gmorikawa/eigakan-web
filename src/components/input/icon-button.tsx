@@ -1,14 +1,13 @@
 import { IconButton as JoyIconButton } from "@mui/joy";
+import type { ThemePalette } from "@shared/types/theme";
 
 export type ButtonType = "button" | "submit" | "reset";
-
 export type IconButtonVariant = "solid" | "outlined" | "soft" | "plain";
-export type IconButtonPalette = "primary" | "neutral" | "danger" | "success" | "warning";
 
 export interface IconButtonProps extends React.PropsWithChildren {
     type?: ButtonType;
     variant?: IconButtonVariant;
-    palette?: IconButtonPalette;
+    palette?: ThemePalette;
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 

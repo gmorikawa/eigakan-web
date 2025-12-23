@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { FormControl, FormLabel, Autocomplete } from "@mui/joy";
+import type { ThemePalette } from "@shared/types/theme";
 
 export type ComboOption = {
     label: string;
@@ -18,11 +19,13 @@ export interface ComboFieldProps<T extends Object> {
     optionKey: keyof T;
     optionLabel: keyof T;
 
+    palette?: ThemePalette;
+
     onChange?: (property: string, value: T | null) => void;
     // onBlur?: (property: string, value: T | null) => void;
 }
 
-export function ComboField<T extends Object>({ label, property, value, placeholder, required, fullWidth, options, optionKey, optionLabel, onChange }: ComboFieldProps<T>) {
+export function ComboField<T extends Object>({ label, property, value, placeholder, required, fullWidth, options, optionKey, optionLabel, palette = "primary", onChange }: ComboFieldProps<T>) {
     const handleChange = (_: React.SyntheticEvent, value: T | null) => {
         onChange?.(property, value);
     };
@@ -37,8 +40,8 @@ export function ComboField<T extends Object>({ label, property, value, placehold
 
     return useMemo(
         () => (
-            <FormControl required={required} style={{ width: fullWidth ? "100%" : "auto" }}>
-                <FormLabel htmlFor={property}>{label}</FormLabel>
+            <FormControl required={required} style={{ width: fullWidth ? "100%" : "auto" }} color={palette}>
+                <FormLabel htmlFor={property} color={palette}>{label}</FormLabel>
 
                 <Autocomplete
                     value={value}
@@ -50,6 +53,7 @@ export function ComboField<T extends Object>({ label, property, value, placehold
                     // onBlur={handleBlur}
                     isOptionEqualToValue={isEqual}
                     sx={{ width: "100%" }}
+                    color={palette}
                 />
             </FormControl>
         ),
