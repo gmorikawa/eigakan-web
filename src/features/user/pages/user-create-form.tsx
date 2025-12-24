@@ -14,7 +14,7 @@ import { RadioField } from "@components/form/radio-field";
 export function UserCreateFormPage() {
     usePageMetadata({ title: "Create User" });
 
-    const form = useUserFormController({
+    const controller = useUserFormController({
         defaultValues: {
             username: "",
             fullname: "",
@@ -27,13 +27,63 @@ export function UserCreateFormPage() {
 
     return (
         <Container>
-            <Form onSubmit={form.handleSubmit}>
+            <Form onSubmit={controller.handleSubmit}>
                 <Stack spacing={2}>
-                    <RadioField label="Role" property="role" options={UserRoleUtils.getList().filter((item) => item.key !== "ADMIN").map((item) => ({ label: item.label, value: item.key }))} value={form.entity.role} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
-                    <TextField label="Full Name" property="fullname" value={form.entity.fullname} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
-                    <TextField label="Username" property="username" value={form.entity.username} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
-                    <TextField label="Email" property="email" value={form.entity.email} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
-                    <PasswordField label="Password" property="password" value={form.entity.password} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
+                    <RadioField
+                        label="Role"
+                        property="role"
+                        options={UserRoleUtils.getList().filter((item) => item.key !== "ADMIN").map((item) => ({ label: item.label, value: item.key }))}
+                        value={controller.entity.role}
+                        required
+                        fullWidth
+                        onChange={controller.handleChange}
+                        onBlur={controller.handleBlur}
+                        error={controller.getError("role")}
+                    />
+
+                    <TextField
+                        label="Full Name"
+                        property="fullname"
+                        value={controller.entity.fullname}
+                        required
+                        fullWidth
+                        onChange={controller.handleChange}
+                        onBlur={controller.handleBlur}
+                        error={controller.getError("fullname")}
+                    />
+
+                    <TextField
+                        label="Username"
+                        property="username"
+                        value={controller.entity.username}
+                        required
+                        fullWidth
+                        onChange={controller.handleChange}
+                        onBlur={controller.handleBlur}
+                        error={controller.getError("username")}
+                    />
+
+                    <TextField
+                        label="Email"
+                        property="email"
+                        value={controller.entity.email}
+                        required
+                        fullWidth
+                        onChange={controller.handleChange}
+                        onBlur={controller.handleBlur}
+                        error={controller.getError("email")}
+                    />
+
+                    <PasswordField
+                        label="Password"
+                        property="password"
+                        value={controller.entity.password}
+                        required
+                        fullWidth
+                        onChange={controller.handleChange}
+                        onBlur={controller.handleBlur}
+                        error={controller.getError("password")}
+                    />
 
                     <Container>
                         <Stack spacing={2} direction="row">
@@ -41,7 +91,7 @@ export function UserCreateFormPage() {
                                 Create
                             </Button>
 
-                            <Button type="button" variant="outlined" onClick={form.handleBack}>
+                            <Button type="button" variant="outlined" onClick={controller.handleBack}>
                                 Cancel
                             </Button>
                         </Stack>

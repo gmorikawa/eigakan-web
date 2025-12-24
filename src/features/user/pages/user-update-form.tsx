@@ -4,18 +4,18 @@ import { useParams } from "@hooks/params";
 import { UserRoleUtils } from "@features/user/utils/user-role";
 import { useUserFormController } from "@features/user/hooks/user-form-controller";
 
-import Button from "@components/input/button";
-import Container from "@/components/container/container";
-import Form from "@components/form/form";
-import Stack from "@components/container/stack";
-import TextField from "@components/form/text-field";
-import RadioField from "@components/form/radio-field";
+import { Button } from "@components/input/button";
+import { Container } from "@/components/container/container";
+import { Form } from "@components/form/form";
+import { Stack } from "@components/container/stack";
+import { TextField } from "@components/form/text-field";
+import { RadioField } from "@components/form/radio-field";
 
 export function UserUpdateFormPage() {
     usePageMetadata({ title: "Update User" });
     const { id } = useParams();
 
-    const form = useUserFormController({
+    const controller = useUserFormController({
         defaultValues: {
             id: id,
             username: "",
@@ -29,12 +29,52 @@ export function UserUpdateFormPage() {
 
     return (
         <Container>
-            <Form onSubmit={form.handleSubmit}>
+            <Form onSubmit={controller.handleSubmit}>
                 <Stack spacing={2}>
-                    <RadioField label="Role" property="role" options={UserRoleUtils.getList().filter((item) => item.key !== "ADMIN").map((item) => ({ label: item.label, value: item.key }))} value={form.entity.role} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
-                    <TextField label="Full Name" property="fullname" value={form.entity.fullname} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
-                    <TextField label="Username" property="username" value={form.entity.username} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
-                    <TextField label="Email" property="email" value={form.entity.email} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
+                    <RadioField
+                        label="Role"
+                        property="role"
+                        options={UserRoleUtils.getList().filter((item) => item.key !== "ADMIN").map((item) => ({ label: item.label, value: item.key }))}
+                        value={controller.entity.role}
+                        required
+                        fullWidth
+                        onChange={controller.handleChange}
+                        onBlur={controller.handleBlur}
+                        error={controller.getError("role")}
+                    />
+
+                    <TextField
+                        label="Full Name"
+                        property="fullname"
+                        value={controller.entity.fullname}
+                        required
+                        fullWidth
+                        onChange={controller.handleChange}
+                        onBlur={controller.handleBlur}
+                        error={controller.getError("fullname")}
+                    />
+
+                    <TextField
+                        label="Username"
+                        property="username"
+                        value={controller.entity.username}
+                        required
+                        fullWidth
+                        onChange={controller.handleChange}
+                        onBlur={controller.handleBlur}
+                        error={controller.getError("username")}
+                    />
+
+                    <TextField
+                        label="Email"
+                        property="email"
+                        value={controller.entity.email}
+                        required
+                        fullWidth
+                        onChange={controller.handleChange}
+                        onBlur={controller.handleBlur}
+                        error={controller.getError("email")}
+                    />
 
                     <Container>
                         <Stack spacing={2} direction="row">
@@ -42,7 +82,7 @@ export function UserUpdateFormPage() {
                                 Update
                             </Button>
 
-                            <Button type="button" variant="outlined" onClick={form.handleBack}>
+                            <Button type="button" variant="outlined" onClick={controller.handleBack}>
                                 Cancel
                             </Button>
                         </Stack>

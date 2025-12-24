@@ -11,6 +11,7 @@ import { Stack } from "@components/container/stack";
 import { TextField } from "@components/form/text-field";
 import { DateField } from "@components/form/date-field";
 import { ComboField } from "@components/form/combo-field";
+import { FileField } from "@components/form/file-field";
 
 export function VideoUpdateFormPage() {
     usePageMetadata({ title: "Update Video" });
@@ -18,7 +19,7 @@ export function VideoUpdateFormPage() {
 
     const languages = useLanguageListController();
 
-    const form = useVideoFormController({
+    const controller = useVideoFormController({
         defaultValues: {
             id: id,
             title: "",
@@ -31,20 +32,62 @@ export function VideoUpdateFormPage() {
 
     return (
         <Container>
-            <Form onSubmit={form.handleSubmit}>
+            <Form onSubmit={controller.handleSubmit}>
                 <Stack spacing={2}>
-                    <TextField label="Title" property="title" value={form.entity.title} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
-                    <TextField label="Description" property="description" value={form.entity.description} fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
-                    <DateField label="Released At" property="releasedAt" value={form.entity.releasedAt} fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
-                    <ComboField label="Language" property="language" value={form.entity.language} fullWidth options={languages.data} optionKey="id" optionLabel="name" onChange={form.handleChange} />
+                    <TextField
+                        label="Title"
+                        property="title"
+                        value={controller.entity.title}
+                        required
+                        fullWidth
+                        onChange={controller.handleChange}
+                        onBlur={controller.handleBlur}
+                        error={controller.getError("title")}
+                    />
+
+                    <TextField
+                        label="Description"
+                        property="description"
+                        value={controller.entity.description}
+                        fullWidth
+                        onChange={controller.handleChange}
+                        onBlur={controller.handleBlur}
+                        error={controller.getError("description")}
+                    />
+
+                    <DateField
+                        label="Released At"
+                        property="releasedAt"
+                        value={controller.entity.releasedAt}
+                        fullWidth
+                        onChange={controller.handleChange}
+                        onBlur={controller.handleBlur}
+                        error={controller.getError("releasedAt")}
+                    />
+
+                    <ComboField
+                        label="Language"
+                        property="language"
+                        value={controller.entity.language}
+                        fullWidth
+                        options={languages.data}
+                        optionKey="id"
+                        optionLabel="name"
+                        onChange={controller.handleChange}
+                        error={controller.getError("language")}
+                    />
+
                     <TextField
                         label="Tags"
                         property="tags"
-                        value={form.entity.tags?.join(", ")}
+                        value={controller.entity.tags?.join(", ")}
                         fullWidth
-                        onChange={(property: string, value: string) => form.handleChange(property, value.split(",").map(tag => tag.trim()))}
-                        onBlur={(property: string, value: string) => form.handleBlur(property, value.split(",").map(tag => tag.trim()))}
+                        onChange={(property: string, value: string) => controller.handleChange(property, value.split(",").map(tag => tag.trim()))}
+                        onBlur={(property: string, value: string) => controller.handleBlur(property, value.split(",").map(tag => tag.trim()))}
+                        error={controller.getError("tags")}
                     />
+
+                    <FileField label="File" property="file" fullWidth />
 
                     <Container>
                         <Stack spacing={2} direction="row">
@@ -52,7 +95,7 @@ export function VideoUpdateFormPage() {
                                 Update
                             </Button>
 
-                            <Button type="button" variant="outlined" onClick={form.handleBack}>
+                            <Button type="button" variant="outlined" onClick={controller.handleBack}>
                                 Cancel
                             </Button>
                         </Stack>

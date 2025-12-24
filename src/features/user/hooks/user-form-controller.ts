@@ -1,76 +1,64 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
+import { useForm, type FormController } from "@hooks/form";
 import { useNavigator } from "@hooks/navigator";
 
 import type { NewUser, User } from "@features/user/types/entity";
 import { useUserController } from "@features/user/hooks/user-controller";
+import { userValidatorSchema } from "@features/user/utils/validator";
 
 import { useAlert } from "@components/feedback/alert";
 
-export interface UserFormController {
-    entity: Partial<User>;
-    handleChange: (field: string, value: any) => void;
-    handleBlur: (field: string, value: any) => void;
+export interface UserFormController extends FormController<User> {
     handleBack: () => void;
-    handleSubmit: () => void;
 }
 
 export interface UserFormConfiguration {
-    defaultValues?: Partial<User>;
+    defaultValues: Partial<User>;
 }
 
-export function useUserFormController(config?: UserFormConfiguration): UserFormController {
+export function useUserFormController(config: UserFormConfiguration): UserFormController {
     const controller = useUserController();
     const alert = useAlert();
     const navigate = useNavigator();
-    const [entity, setEntity] = useState<Partial<User>>(config?.defaultValues || {});
-    const handleChange = (field: string, value: any) => {
-        setEntity((previousEntity) => ({
-            ...previousEntity,
-            [field]: value,
-        }));
-    };
-
-    const handleBlur = (field: string, value: any) => {
-        setEntity((previousEntity) => ({
-            ...previousEntity,
-            [field]: value,
-        }));
-    };
-
-    const handleSubmit = () => {
-        ((entity.id)
-            ? controller.update(entity.id, entity as User)
-            : controller.create(entity as NewUser)
-        )
-            .then(async (_: User) => {
-                handleBack();
-            })
-            .catch((_: Error) => {
-                alert.showMessage("Error creating user", "error");
-            });
-    };
+    const form = useForm<User>({
+        defaultValues: config.defaultValues,
+        schema: userValidatorSchema,
+        onSubmit: () => {
+            ((form.entity.id)
+                ? controller.update(form.entity.id, form.entity as User)
+                : controller.create(form.entity as NewUser)
+            )
+                .then(async (_: User) => {
+                    handleBack();
+                })
+                .catch((_: Error) => {
+                    alert.showMessage("Error creating user", "error");
+                });
+        }
+    });
 
     const handleBack = () => {
         navigate.to("/admin/user/list");
     };
 
-    useEffect(() => {
-        if (config?.defaultValues?.id) {
-            controller.getById(config.defaultValues.id)
-                .then((user: User | null) => {
-                    setEntity(user || {});
+    const loadEntity = async (id: string | null) => {
+        if (id) {
+            controller.getById(id)
+                .then((fetchedEntity) => {
+                    form.updateEntity(fetchedEntity);
                 })
-                .catch((_: Error) => {
-                    alert.showMessage("Error loading user", "error");
+                .catch((error: Error) => {
+                    console.error("Error fetching video:", error);
                 });
         }
-    }, [])
+    };
+
+    useEffect(() => {
+        loadEntity(form.entity.id || null);
+    }, [form.entity.id]);
     return {
-        entity,
-        handleChange,
-        handleBlur,
-        handleSubmit,
+        ...form,
         handleBack
     };
 }

@@ -1,5 +1,4 @@
 import { usePageMetadata } from "@layout/page";
-import { useNavigator } from "@hooks/navigator";
 import { useParams } from "@hooks/params";
 
 import { useLanguageFormController } from "@features/language/hooks/language-form-controller";
@@ -12,30 +11,41 @@ import { TextField } from "@components/form/text-field";
 
 export function LanguageUpdateFormPage() {
     usePageMetadata({ title: "Update Language" });
-    const navigate = useNavigator();
     const { id } = useParams();
 
-    const form = useLanguageFormController({
+    const controller = useLanguageFormController({
         defaultValues: {
             id: id,
             name: "",
             code: "",
-        },
-        onSuccess: () => {
-            handleBack();
         }
     });
 
-    const handleBack = () => {
-        navigate.to("/admin/language/list");
-    };
-
     return (
         <Container>
-            <Form onSubmit={form.handleSubmit}>
+            <Form onSubmit={controller.handleSubmit}>
                 <Stack spacing={2}>
-                    <TextField label="Language" property="name" value={form.entity.name} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
-                    <TextField label="ISO Code" property="code" value={form.entity.code} required fullWidth onChange={form.handleChange} onBlur={form.handleBlur} />
+                    <TextField
+                        label="Language"
+                        property="name"
+                        value={controller.entity.name}
+                        required
+                        fullWidth
+                        onChange={controller.handleChange}
+                        onBlur={controller.handleBlur}
+                        error={controller.getError("name")}
+                    />
+
+                    <TextField
+                        label="ISO Code"
+                        property="code"
+                        value={controller.entity.code}
+                        required
+                        fullWidth
+                        onChange={controller.handleChange}
+                        onBlur={controller.handleBlur}
+                        error={controller.getError("code")}
+                    />
 
                     <Container>
                         <Stack spacing={2} direction="row">
@@ -43,7 +53,7 @@ export function LanguageUpdateFormPage() {
                                 Create
                             </Button>
 
-                            <Button type="button" variant="outlined" onClick={handleBack}>
+                            <Button type="button" variant="outlined" onClick={controller.handleBack}>
                                 Cancel
                             </Button>
                         </Stack>
