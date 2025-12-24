@@ -17,6 +17,10 @@ import { VideoListPage } from "@features/video/pages/video-list";
 import { VideoCreateFormPage } from "@features/video/pages/video-create-form";
 import { VideoUpdateFormPage } from "@features/video/pages/video-update-form";
 
+import { FileTypeListPage } from "@features/file-type/pages/file-type-list";
+import { FileTypeUpdateFormPage } from "@features/file-type/pages/file-type-update-form";
+import { FileTypeCreateFormPage } from "@features/file-type/pages/file-type-create-form";
+
 export function RouteProvider() {
     return (
         <BrowserRouter>
@@ -49,6 +53,14 @@ export function RouteProvider() {
                         <Route path="form">
                             <Route index element={<VideoCreateFormPage />} />
                             <Route path=":id" element={<VideoUpdateFormPage />} />
+                        </Route>
+                    </Route>
+
+                    <Route path="file-type">
+                        <Route path="list" element={<FileTypeListPage />} />
+                        <Route path="form">
+                            <Route index element={<FileTypeCreateFormPage />} />
+                            <Route path=":id" element={<FileTypeUpdateFormPage />} />
                         </Route>
                     </Route>
                 </Route>
