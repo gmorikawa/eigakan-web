@@ -9,6 +9,7 @@ import {
     downloadVideo,
     getAllVideos,
     getVideoById,
+    getVideoDownloadUrl,
     updateVideo,
     uploadVideo
 } from "@features/video/utils/api";
@@ -21,6 +22,7 @@ export interface VideoController {
     remove(id: ID): Promise<boolean>;
     upload(id: ID, binary: BinaryFile): Promise<boolean>;
     download(id: ID): Promise<Blob | null>;
+    downloadUrl(id: ID): string;
 }
 
 export function useVideoController(): VideoController {
@@ -33,6 +35,7 @@ export function useVideoController(): VideoController {
     const remove = (id: ID) => deleteVideo(session, id);
     const upload = (id: ID, binary: BinaryFile) => uploadVideo(session, id, binary);
     const download = (id: ID) => downloadVideo(session, id);
+    const downloadUrl = (id: ID) => getVideoDownloadUrl(session, id);
 
     return {
         getAll,
@@ -42,5 +45,6 @@ export function useVideoController(): VideoController {
         remove,
         upload,
         download,
+        downloadUrl
     };
 }

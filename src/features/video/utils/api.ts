@@ -126,3 +126,7 @@ export async function downloadVideo(session: Session, id: ID) {
 
     return response.blob();
 };
+
+export function getVideoDownloadUrl(session: Session, id: ID) {
+    return `${Environment.API_URL}/videos/${id}/download?auth_token=${encodeURIComponent(session.token ?? "")}`;
+}

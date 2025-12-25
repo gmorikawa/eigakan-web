@@ -1,5 +1,3 @@
-import { useEffect, useState } from "react";
-
 import useParams from "@hooks/params";
 
 import { usePageMetadata } from "@layout/page";
@@ -12,30 +10,12 @@ import { Container } from "@/components/container/container";
 export function VideoPlayPage() {
     usePageMetadata({ title: "Video Play" });
 
-    const [url, setUrl] = useState<string | null>(null);
-
     const { id } = useParams();
     const controller = useVideoController();
 
-    useEffect(() => {
-        controller.download(id)
-            .then((blob: Blob | null) => {
-                if (blob) {
-                    setUrl(URL.createObjectURL(blob));
-                }
-            })
-            .catch((error) => {
-                console.error("Error downloading video:", error);
-            });
-
-        return () => {
-            console.info("Cleaning up video URL", id);
-            URL.revokeObjectURL(url!);
-        }
-    }, []);
     return (
         <Container>
-            {url && (<VideoPlayer src={url} />)}
+            <VideoPlayer src={controller.downloadUrl(id)} />
         </Container>
     );
 }
