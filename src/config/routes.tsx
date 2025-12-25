@@ -16,6 +16,7 @@ import { LanguageUpdateFormPage } from "@features/language/pages/language-update
 import { VideoListPage } from "@features/video/pages/video-list";
 import { VideoCreateFormPage } from "@features/video/pages/video-create-form";
 import { VideoUpdateFormPage } from "@features/video/pages/video-update-form";
+import { VideoPlayPage } from "@features/video/pages/video-play";
 
 import { FileTypeListPage } from "@features/file-type/pages/file-type-list";
 import { FileTypeUpdateFormPage } from "@features/file-type/pages/file-type-update-form";
@@ -54,6 +55,7 @@ export function RouteProvider() {
                             <Route index element={<VideoCreateFormPage />} />
                             <Route path=":id" element={<VideoUpdateFormPage />} />
                         </Route>
+                        <Route path="play/:id" element={<VideoPlayPage />} />
                     </Route>
 
                     <Route path="file-type">

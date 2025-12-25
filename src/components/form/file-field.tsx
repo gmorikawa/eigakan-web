@@ -15,7 +15,7 @@ export interface FileFieldProps {
 
     palette?: ThemePalette;
 
-    onChange?: (property: string, value: File | FileList | null) => void;
+    onChange?: (property: string, value: File | null) => void;
 }
 
 export function FileField({ 
@@ -36,13 +36,15 @@ export function FileField({
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const files = event.target.files;
         if (files && files.length > 0) {
-            if (multiple) {
-                setFilename(`${files.length} file${files.length > 1 ? 's' : ''} selected`);
-                onChange?.(property, files);
-            } else {
-                setFilename(files[0].name);
-                onChange?.(property, files[0]);
-            }
+            setFilename(files[0].name);
+            onChange?.(property, files[0]);
+            // if (multiple) {
+            //     setFilename(`${files.length} file${files.length > 1 ? 's' : ''} selected`);
+            //     onChange?.(property, files);
+            // } else {
+            //     setFilename(files[0].name);
+            //     onChange?.(property, files[0]);
+            // }
         } else {
             setFilename("");
             onChange?.(property, null);

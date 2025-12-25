@@ -11,6 +11,7 @@ export interface VideoListController extends VideoController {
     handleCreate(): void;
     handleUpdate(video: Video): void;
     handleRemove(video: Video): void;
+    handlePlay(video: Video): void;
 }
 
 export function useVideoListController(): VideoListController {
@@ -51,15 +52,20 @@ export function useVideoListController(): VideoListController {
             });
     };
 
+    const handlePlay = (video: Video) => {
+        navigate.to(`/admin/video/play/${video.id}`);
+    };
+
     useEffect(() => {
         loadData();
     }, []);
     return { 
         data,
         refresh,
-        handleRemove,
         handleCreate,
         handleUpdate,
+        handleRemove,
+        handlePlay,
         ...controller
     };
 }

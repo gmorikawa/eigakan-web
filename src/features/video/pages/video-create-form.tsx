@@ -4,13 +4,13 @@ import { useLanguageListController } from "@features/language/hooks/language-lis
 import { useVideoFormController } from "@features/video/hooks/video-form-controller";
 
 import { Button } from "@components/input/button";
+import { ComboField } from "@components/form/combo-field";
 import { Container } from "@/components/container/container";
+import { DateField } from "@components/form/date-field";
+import { FileField } from "@components/form/file-field";
 import { Form } from "@components/form/form";
 import { Stack } from "@components/container/stack";
 import { TextField } from "@components/form/text-field";
-import { DateField } from "@components/form/date-field";
-import { ComboField } from "@components/form/combo-field";
-import FileField from "@components/form/file-field";
 
 export function VideoCreateFormPage() {
     usePageMetadata({ title: "Create Video" });
@@ -84,7 +84,12 @@ export function VideoCreateFormPage() {
                         error={controller.getError("tags")}
                     />
 
-                    <FileField label="File" property="file" fullWidth onChange={controller.handleChange} />
+                    <FileField
+                        label="File"
+                        property="file"
+                        fullWidth
+                        onChange={controller.handleFileChange}
+                    />
 
                     <Container>
                         <Stack spacing={2} direction="row">

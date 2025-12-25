@@ -1,20 +1,25 @@
-import { RemoveIcon, UpdateIcon } from "@/shared/icons";
-
-import Stack from "@components/container/stack";
-import Table from "@components/data/table";
-import IconButton from "@components/input/icon-button";
+import { PlayIcon, RemoveIcon, UpdateIcon } from "@/shared/icons";
+import { formatDate } from "@shared/utils/date";
 
 import type { Video } from "@features/video/types/entity";
-import { formatDate } from "@shared/utils/date";
+
+import { IconButton } from "@components/input/icon-button";
+import { Stack } from "@components/container/stack";
+import { Table } from "@components/data/table";
 
 export interface VideoTableProps {
     videos: Video[];
 
+    onPlay?: (video: Video) => void;
     onUpdate?: (video: Video) => void;
     onRemove?: (video: Video) => void;
 }
 
-export function VideoTable({ videos, onUpdate, onRemove }: VideoTableProps) {
+export function VideoTable({ videos, onPlay, onUpdate, onRemove }: VideoTableProps) {
+
+    const play = (video: Video) => {
+        onPlay?.(video);
+    };
 
     const update = (video: Video) => {
         onUpdate?.(video);
@@ -43,6 +48,7 @@ export function VideoTable({ videos, onUpdate, onRemove }: VideoTableProps) {
                     <tr key={video.id}>
                         <td>
                             <Stack direction="row">
+                                <IconButton onClick={() => play(video)}><PlayIcon /></IconButton>
                                 <IconButton onClick={() => update(video)}><UpdateIcon /></IconButton>
                                 <IconButton onClick={() => remove(video)} palette="danger"><RemoveIcon /></IconButton>
                             </Stack>

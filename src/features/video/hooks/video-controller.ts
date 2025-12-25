@@ -2,7 +2,16 @@ import type { ID } from "@shared/types/id";
 
 import { useSession } from "@features/auth/hooks/session";
 import type { NewVideo, Video } from "@features/video/types/entity";
-import { createVideo, deleteVideo, getAllVideos, getVideoById, updateVideo } from "../utils/api";
+import type { BinaryFile } from "@features/file/types/binary";
+import {
+    createVideo,
+    deleteVideo,
+    downloadVideo,
+    getAllVideos,
+    getVideoById,
+    updateVideo,
+    uploadVideo
+} from "@features/video/utils/api";
 
 export interface VideoController {
     getAll(): Promise<Video[]>;
@@ -10,6 +19,8 @@ export interface VideoController {
     create(video: NewVideo): Promise<Video>;
     update(id: ID, video: Video): Promise<Video>;
     remove(id: ID): Promise<boolean>;
+    upload(id: ID, binary: BinaryFile): Promise<boolean>;
+    download(id: ID): Promise<Blob | null>;
 }
 
 export function useVideoController(): VideoController {
@@ -20,6 +31,8 @@ export function useVideoController(): VideoController {
     const create = (video: NewVideo) => createVideo(session, video);
     const update = (id: ID, video: Video) => updateVideo(session, id, video);
     const remove = (id: ID) => deleteVideo(session, id);
+    const upload = (id: ID, binary: BinaryFile) => uploadVideo(session, id, binary);
+    const download = (id: ID) => downloadVideo(session, id);
 
     return {
         getAll,
@@ -27,5 +40,7 @@ export function useVideoController(): VideoController {
         create,
         update,
         remove,
+        upload,
+        download,
     };
 }

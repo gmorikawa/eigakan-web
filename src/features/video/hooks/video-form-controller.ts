@@ -1,8 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+import type { ID } from "@shared/types/id";
 
 import { useNavigator } from "@hooks/navigator";
 import { useForm, type FormController } from "@hooks/form";
 
+import type { BinaryFile } from "@features/file/types/binary";
 import type { NewVideo, Video } from "@features/video/types/entity";
 import { useVideoController } from "@features/video/hooks/video-controller";
 import { videoValidatorSchema } from "@features/video/utils/validator";
@@ -11,6 +14,7 @@ import { useAlert } from "@components/feedback/alert";
 
 export interface VideoFormController extends FormController<Video> {
     handleBack: () => void;
+    handleFileChange: (property: string, newBinary: BinaryFile | null) => void;
 }
 
 export interface VideoFormConfiguration {
@@ -21,6 +25,7 @@ export function useVideoFormController(config: VideoFormConfiguration): VideoFor
     const navigate = useNavigator();
     const alert = useAlert();
     const controller = useVideoController();
+    const [binary, setBinary] = useState<BinaryFile | null>(null);
     const form = useForm({
         defaultValues: config.defaultValues,
         schema: videoValidatorSchema,
@@ -29,8 +34,13 @@ export function useVideoFormController(config: VideoFormConfiguration): VideoFor
                 ? controller.update(form.entity.id, form.entity as Video)
                 : controller.create(form.entity as NewVideo)
             )
-                .then(async (_: Video) => {
-                    alert.showMessage(`Video ${form.entity.id ? "updated" : "created"} successfully`, "success");
+                .then((savedVideo: Video) => savedVideo.id)
+                .then((id: ID) => {
+                    if (binary && id) {
+                        return controller.upload(id, binary);
+                    }
+                })
+                .then(() => {
                     handleBack();
                 })
                 .catch((_: Error) => {
@@ -55,11 +65,16 @@ export function useVideoFormController(config: VideoFormConfiguration): VideoFor
         }
     };
 
+    const handleFileChange = (_: string, newBinary: BinaryFile | null) => {
+        setBinary(newBinary);
+    };
+
     useEffect(() => {
         loadEntity(form.entity.id || null);
     }, [form.entity.id]);
     return {
         handleBack,
+        handleFileChange,
         ...form,
     };
 }

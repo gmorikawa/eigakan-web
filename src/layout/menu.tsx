@@ -1,5 +1,5 @@
 import { List, ListItem, ListItemButton, ListItemContent, ListItemDecorator, ListSubheader } from "@mui/joy";
-import { LanguageIcon, UserIcon, VideoIcon } from "@/shared/icons";
+import { FileIcon, LanguageIcon, UserIcon, VideoIcon } from "@/shared/icons";
 import useNavigator from "@hooks/navigator";
 
 interface MenuSectionProps {
@@ -62,6 +62,7 @@ export function Menu() {
                 <MenuItem icon={<UserIcon />} label="Users" link="/admin/user/list" onClick={handleNavigate} />
                 <MenuItem icon={<LanguageIcon />} label="Languages" link="/admin/language/list" onClick={handleNavigate} />
                 <MenuItem icon={<VideoIcon />} label="Videos" link="/admin/video/list" onClick={handleNavigate} />
+                <MenuItem icon={<FileIcon />} label="File Types" link="/admin/file-type/list" onClick={handleNavigate} />
             </MenuSection>
         </MenuContainer>
     );
