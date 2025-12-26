@@ -1,6 +1,6 @@
 import z from "zod";
-import { UserStatusUtils } from "./user-status";
-import { UserRoleUtils } from "./user-role";
+import { UserStatusUtils } from "./enums";
+import { UserRoleUtils } from "./enums";
 
 export const userValidatorSchema = z.object({
     username: z.string().min(1, "Username is required"),

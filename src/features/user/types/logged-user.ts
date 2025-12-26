@@ -1,5 +1,4 @@
-import type { UserRole } from "@/features/user/types/user-role";
-import type { UserStatus } from "@/features/user/types/user-status";
+import type { UserRole, UserStatus } from "@/features/user/types/enums";
 
 export interface LoggedUser {
     id: string;

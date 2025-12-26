@@ -5,8 +5,8 @@ import Table from "@components/data/table";
 import IconButton from "@components/input/icon-button";
 
 import type { User } from "@features/user/types/entity";
-import { UserRoleUtils } from "@features/user/utils/user-role";
-import { UserStatusUtils } from "@features/user/utils/user-status";
+import { UserRoleUtils } from "@features/user/utils/enums";
+import { UserStatusUtils } from "@features/user/utils/enums";
 
 export interface UserTableProps {
     users: User[];

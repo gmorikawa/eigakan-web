@@ -1,6 +1,6 @@
 import { usePageMetadata } from "@layout/page";
 
-import { UserRoleUtils } from "@features/user/utils/user-role";
+import { UserRoleUtils } from "@features/user/utils/enums";
 import { useUserFormController } from "@features/user/hooks/user-form-controller";
 
 import { Button } from "@components/input/button";
