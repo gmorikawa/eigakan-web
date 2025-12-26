@@ -32,8 +32,8 @@ export function useUserFormController(config: UserFormConfiguration): UserFormCo
                 .then(async (_: User) => {
                     handleBack();
                 })
-                .catch((_: Error) => {
-                    alert.showMessage("Error creating user", "error");
+                .catch((error: Error) => {
+                    alert.showMessage(`Error creating user: ${error.message}`, "error");
                 });
         }
     });
@@ -49,7 +49,7 @@ export function useUserFormController(config: UserFormConfiguration): UserFormCo
                     form.updateEntity(fetchedEntity);
                 })
                 .catch((error: Error) => {
-                    console.error("Error fetching video:", error);
+                    console.error(`Error fetching user: ${error.message}`, error);
                 });
         }
     };

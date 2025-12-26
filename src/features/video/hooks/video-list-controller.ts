@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import useNavigator from "@hooks/navigator";
 
+import { useAlert } from "@components/feedback/alert";
+
 import type { Video } from "@features/video/types/entity";
 import { useVideoController, type VideoController } from "@features/video/hooks/video-controller";
 
@@ -17,6 +19,7 @@ export interface VideoListController extends VideoController {
 export function useVideoListController(): VideoListController {
     const controller = useVideoController();
     const navigate = useNavigator();
+    const alert = useAlert();
     const [data, setData] = useState<Video[]>([]);
 
     const loadData = async () => {
@@ -24,9 +27,8 @@ export function useVideoListController(): VideoListController {
             .then(async (videos: Video[]) => {
                 setData(videos);
             })
-            .catch((error) => {
-                console.error("Error loading videos:", error);
-                throw error;
+            .catch((error: Error) => {
+                alert.showMessage(`Error loading videos: ${error.message}`, "error");
             });
     };
 
@@ -47,8 +49,8 @@ export function useVideoListController(): VideoListController {
             .then(async (_: boolean) => {
                 refresh();
             })
-            .catch((error) => {
-                console.error("Error removing video:", error);
+            .catch((error: Error) => {
+                alert.showMessage(`Error removing video: ${error.message}`, "error");
             });
     };
 

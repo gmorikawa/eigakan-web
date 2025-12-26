@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import useNavigator from "@hooks/navigator";
 
+import { useAlert } from "@components/feedback/alert";
+
 import type { FileType } from "@features/file-type/types/entity";
 import { useFileTypeController, type FileTypeController } from "@features/file-type/hooks/file-type-controller";
 
@@ -16,6 +18,7 @@ export interface FileTypeListController extends FileTypeController {
 export function useFileTypeListController(): FileTypeListController {
     const controller = useFileTypeController();
     const navigate = useNavigator();
+    const alert = useAlert();
     const [data, setData] = useState<FileType[]>([]);
 
     const loadData = async () => {
@@ -23,9 +26,8 @@ export function useFileTypeListController(): FileTypeListController {
             .then(async (fileTypes: FileType[]) => {
                 setData(fileTypes);
             })
-            .catch((error) => {
-                console.error("Error loading file types:", error);
-                throw error;
+            .catch((error: Error) => {
+                alert.showMessage(`Error loading file types: ${error.message}`, "error");
             });
     };
 
@@ -46,8 +48,8 @@ export function useFileTypeListController(): FileTypeListController {
             .then(async (_: boolean) => {
                 refresh();
             })
-            .catch((error) => {
-                console.error("Error removing file type:", error);
+            .catch((error: Error) => {
+                alert.showMessage(`Error removing file type: ${error.message}`, "error");
             });
     };
 

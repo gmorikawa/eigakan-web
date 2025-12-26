@@ -33,8 +33,8 @@ export function useLanguageFormController(config: LanguageFormConfiguration): La
                 .then(async (_: Language) => {
                     handleBack();
                 })
-                .catch((_: Error) => {
-                    alert.showMessage("Error creating language", "error");
+                .catch((error: Error) => {
+                    alert.showMessage(`Error creating language: ${error.message}`, "error");
                 });
         }
     });
@@ -51,7 +51,7 @@ export function useLanguageFormController(config: LanguageFormConfiguration): La
                     form.updateEntity(fetchedEntity);
                 })
                 .catch((error: Error) => {
-                    console.error("Error fetching video:", error);
+                    console.error(`Error fetching language: ${error.message}`);
                 });
         }
     };

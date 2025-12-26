@@ -33,8 +33,8 @@ export function useFileTypeFormController(config: FileTypeFormConfiguration): Fi
                 .then(async (_: FileType) => {
                     handleBack();
                 })
-                .catch((_: Error) => {
-                    alert.showMessage("Error creating file type", "error");
+                .catch((error: Error) => {
+                    alert.showMessage(`Error creating file type: ${error.message}`, "error");
                 });
         }
     });
@@ -51,7 +51,7 @@ export function useFileTypeFormController(config: FileTypeFormConfiguration): Fi
                     form.updateEntity(fetchedEntity);
                 })
                 .catch((error: Error) => {
-                    console.error("Error fetching file type:", error);
+                    console.error(`Error fetching file type: ${error.message}`, error);
                 });
         }
     };

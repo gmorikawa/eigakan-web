@@ -17,7 +17,8 @@ export async function getAllVideos(session: Session) {
     });
 
     if (!response.ok) {
-        throw new Error("Failed to get videos");
+        const error = await response.json();
+        throw new Error(error.message);
     }
 
     const data = await response.json();
@@ -34,7 +35,8 @@ export async function getVideoById(session: Session, id: ID) {
     });
 
     if (!response.ok) {
-        throw new Error("Failed to get video");
+        const error = await response.json();
+        throw new Error(error.message);
     }
 
     const data = await response.json();
@@ -52,7 +54,8 @@ export async function createVideo(session: Session, video: NewVideo) {
     });
 
     if (!response.ok) {
-        throw new Error("Failed to create video");
+        const error = await response.json();
+        throw new Error(error.message);
     }
 
     const data = await response.json();
@@ -70,7 +73,8 @@ export async function updateVideo(session: Session, id: ID, video: Video) {
     });
 
     if (!response.ok) {
-        throw new Error("Failed to update video");
+        const error = await response.json();
+        throw new Error(error.message);
     }
 
     const data = await response.json();
@@ -87,7 +91,8 @@ export async function deleteVideo(session: Session, id: ID) {
     });
 
     if (!response.ok) {
-        throw new Error("Failed to delete video");
+        const error = await response.json();
+        throw new Error(error.message);
     }
 
     return true;
@@ -106,7 +111,8 @@ export async function uploadVideo(session: Session, id: ID, binary: BinaryFile) 
     });
 
     if (!response.ok) {
-        throw new Error("Failed to upload video");
+        const error = await response.json();
+        throw new Error(error.message);
     }
 
     return true;
@@ -121,7 +127,8 @@ export async function downloadVideo(session: Session, id: ID) {
     });
 
     if (!response.ok) {
-        throw new Error("Failed to download video");
+        const error = await response.json();
+        throw new Error(error.message);
     }
 
     return response.blob();

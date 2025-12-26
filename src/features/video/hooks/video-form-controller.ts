@@ -43,8 +43,8 @@ export function useVideoFormController(config: VideoFormConfiguration): VideoFor
                 .then(() => {
                     handleBack();
                 })
-                .catch((_: Error) => {
-                    alert.showMessage("Error creating video", "error");
+                .catch((error_: Error) => {
+                    alert.showMessage(`Error creating video: ${error_.message}`, "error");
                 });
         }
     });
@@ -60,7 +60,7 @@ export function useVideoFormController(config: VideoFormConfiguration): VideoFor
                     form.updateEntity(fetchedEntity);
                 })
                 .catch((error: Error) => {
-                    console.error("Error fetching video:", error);
+                    alert.showMessage(`Error loading video: ${error.message}`, "error");
                 });
         }
     };

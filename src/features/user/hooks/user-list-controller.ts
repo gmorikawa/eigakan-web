@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import useNavigator from "@hooks/navigator";
 
+import { useAlert } from "@components/feedback/alert";
+
 import type { User } from "@features/user/types/entity";
 import { useUserController, type UserController } from "@features/user/hooks/user-controller";
 
@@ -16,6 +18,7 @@ export interface UserListController extends UserController {
 export function useUserListController(): UserListController {
     const controller = useUserController();
     const navigate = useNavigator();
+    const alert = useAlert();
     const [data, setData] = useState<User[]>([]);
 
     const loadData = async () => {
@@ -24,8 +27,7 @@ export function useUserListController(): UserListController {
                 setData(users);
             })
             .catch((error) => {
-                console.error("Error loading users:", error);
-                throw error;
+                alert.showMessage(`Error loading users: ${error.message}`, "error");
             });
     };
 
@@ -46,8 +48,8 @@ export function useUserListController(): UserListController {
             .then(async (_: boolean) => {
                 refresh();
             })
-            .catch((error) => {
-                console.error("Error removing user:", error);
+            .catch((error: Error) => {
+                alert.showMessage(`Error removing user: ${error.message}`, "error");
             });
     };
 

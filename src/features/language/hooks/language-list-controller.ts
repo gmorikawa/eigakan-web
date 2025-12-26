@@ -3,6 +3,7 @@ import useNavigator from "@hooks/navigator";
 
 import type { Language } from "@features/language/types/entity";
 import { useLanguageController, type LanguageController } from "@features/language/hooks/language-controller";
+import { useAlert } from "@components/feedback/alert";
 
 export interface LanguageListController extends LanguageController {
     data: Language[];
@@ -16,6 +17,7 @@ export interface LanguageListController extends LanguageController {
 export function useLanguageListController(): LanguageListController {
     const controller = useLanguageController();
     const navigate = useNavigator();
+    const alert = useAlert();
     const [data, setData] = useState<Language[]>([]);
 
     const loadData = async () => {
@@ -23,9 +25,8 @@ export function useLanguageListController(): LanguageListController {
             .then(async (languages: Language[]) => {
                 setData(languages);
             })
-            .catch((error) => {
-                console.error("Error loading languages:", error);
-                throw error;
+            .catch((error: Error) => {
+                alert.showMessage(`Error loading languages: ${error.message}`, "error");
             });
     };
 
@@ -46,8 +47,8 @@ export function useLanguageListController(): LanguageListController {
             .then(async (_: boolean) => {
                 refresh();
             })
-            .catch((error) => {
-                console.error("Error removing language:", error);
+            .catch((error: Error) => {
+                alert.showMessage(`Error removing language: ${error.message}`, "error");
             });
     };
 
